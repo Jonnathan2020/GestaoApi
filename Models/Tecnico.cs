@@ -11,7 +11,7 @@ namespace GestaoApi.Models
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
         public string Cpf { get; set; }
-        public string Especializacao { get; set; }
-        
+        public string Especialidade { get; set; }
+        public OrdemServico OrdemId { get; set; }
     }
 }

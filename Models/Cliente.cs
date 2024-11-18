@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace GestaoApi.Models
 {
@@ -18,7 +19,12 @@ namespace GestaoApi.Models
         public string Bairro { get; set; }
         public string Cidade { get; set; }
         public string UF { get; set; }
-        public Equipamento Equipamento{ get; set; }
-        public OrdemServico OrdemS { get; set; }
+        public Equipamento? EquipamentoId{ get; set; }
+        public OrdemServico? OrdemId { get; set; }
+
+        public static implicit operator Cliente(int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

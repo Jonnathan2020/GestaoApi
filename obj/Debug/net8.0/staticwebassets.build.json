@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "q+LnIJKRNkT0xmSV8ilml/SZrxnIwuMLe6meeikkZys=",
+  "Hash": "p7NXurKUwqEuG3Rj/Yafmwa9vYGECNXwvR5MNwgcDfU=",
   "Source": "GestaoApi",
   "BasePath": "_content/GestaoApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

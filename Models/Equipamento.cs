@@ -13,7 +13,7 @@ namespace GestaoApi.Models
         public string Modelo{ get; set; }
         public string Acessorios { get; set; }
         public string Defeito { get; set; }
-        public Cliente IdCLiente { get; set; }
-        public OrdemServico IdOrdemServico { get; set; }
+        public Cliente? ClienteId { get; set; }
+        public OrdemServico? OrdemId { get; set; }
     }
 }
