@@ -19,12 +19,8 @@ namespace GestaoApi.Models
         public string Bairro { get; set; }
         public string Cidade { get; set; }
         public string UF { get; set; }
-        public Equipamento? EquipamentoId{ get; set; }
-        public OrdemServico? OrdemId { get; set; }
-
-        public static implicit operator Cliente(int v)
-        {
-            throw new NotImplementedException();
-        }
+        public OrdemServico OrdemServico { get; set; }
+        public int? EquipamentoId { get; set; }  // Chave estrangeira opcional para Equipamento 
+        public Equipamento Equipamento { get; set; }
     }
 }

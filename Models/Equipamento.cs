@@ -13,7 +13,11 @@ namespace GestaoApi.Models
         public string Modelo{ get; set; }
         public string Acessorios { get; set; }
         public string Defeito { get; set; }
-        public Cliente? ClienteId { get; set; }
-        public OrdemServico? OrdemId { get; set; }
+        public OrdemServico OrdemServico { get; set; } // Propriedade de navegação
+        public Cliente Cliente { get; set; }
+        
+        // Definindo explicitamente a chave estrangeira
+        public int? ClienteId { get; set; }
+        public ICollection<OrdemEquipamento> OrdemEquipamentos { get; set; }
     }
 }

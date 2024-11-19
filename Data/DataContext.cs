@@ -30,22 +30,53 @@ namespace GestaoApi.Data
             //modelBuilder.Entity<OrdemEquipamento>().ToTable("TB_ORDEM_EQUIPAMENTO");
             
             //RELACIONAMENTOS              
-            modelBuilder.Entity<OrdemServico>()
-                .HasOne(e => e.ClienteId)
-                .WithOne(e => e.OrdemId)
-                .IsRequired(false);
+            // Configura a relação one-to-one
+            modelBuilder.Entity<Cliente>()
+                .HasOne(c => c.OrdemServico) // Propriedade de navegação de Cliente para OrdemServico
+                .WithOne(o => o.Cliente) // Propriedade de navegação de OrdemServico para Cliente
+                .HasForeignKey<OrdemServico>(o => o.ClienteId); // Define qual é a chave estrangeira (lado dependente)
 
             modelBuilder.Entity<Tecnico>()
-                .HasOne(e => e.OrdemId)
-                .WithOne(e => e.TecnicoId)
-                .IsRequired(false);
+                .HasOne(e => e.OrdemServico) // Propriedade de navegação de OrdemServico para tecnico
+                .WithOne(o => o.Tecnico) // Propriedade de navegação de tecnico para OrdemServico
+                .HasForeignKey<OrdemServico>(o => o.EquipamentoId); // Define o lado dependente e a chave estrangeira
 
+            // Configurando o relacionamento One-to-One entre Cliente e Equipamento
+            modelBuilder.Entity<Cliente>()
+                .HasOne(c => c.Equipamento)      // Cliente tem um Equipamento
+                .WithOne(e => e.Cliente)         // Equipamento tem um Cliente
+                .HasForeignKey<Equipamento>(e => e.ClienteId) // Define a chave estrangeira em Equipamento
+                .IsRequired(false); // Caso a relação seja opcional, como no seu caso
 
+            // Configura a relação one-to-one entre Equipamento e OrdemServico
             modelBuilder.Entity<Equipamento>()
-                .HasOne(e => e.ClienteId)
-                .WithOne(e => e.EquipamentoId)
-                .IsRequired(false);
-                
+                .HasOne(e => e.OrdemServico) // Propriedade de navegação de Equipamento para OrdemServico
+                .WithOne(o => o.Equipamento) // Propriedade de navegação de OrdemServico para Equipamento
+                .HasForeignKey<OrdemServico>(o => o.EquipamentoId); // Define o lado dependente e a chave estrangeira
+
+            // Configuração da relação one-to-one
+            modelBuilder.Entity<OrdemEquipamento>()
+                .HasOne(oe => oe.Equipamento) // OrdemEquipamento tem um Equipamento
+                .WithOne(e => e.OrdemEquipamento) // Equipamento tem um OrdemEquipamento
+                .HasForeignKey<OrdemEquipamento>(oe => oe.NumSerie); // NumSerie é a chave estrangeira
+
+            // Configuração da chave composta para OrdemEquipamento
+            modelBuilder.Entity<OrdemEquipamento>()
+                .HasKey(oe => new { oe.OrdemId, oe.NumSerie }); // Chave composta
+
+            // Configuração do relacionamento entre OrdemEquipamento e OrdemServico
+            modelBuilder.Entity<OrdemEquipamento>()
+                .HasOne(oe => oe.OrdemServico) // OrdemEquipamento tem uma OrdemServico
+                .WithMany(os => os.OrdemEquipamentos) // OrdemServico tem muitos OrdemEquipamentos
+                .HasForeignKey(oe => oe.OrdemId); // OrdemId é a chave estrangeira
+
+            // Configuração do relacionamento entre OrdemEquipamento e Equipamento
+            modelBuilder.Entity<OrdemEquipamento>()
+                .HasOne(oe => oe.Equipamento) // OrdemEquipamento tem um Equipamento
+                .WithMany(e => e.OrdemEquipamentos) // Equipamento tem muitos OrdemEquipamentos
+                .HasForeignKey(oe => oe.NumSerie); // NumSerie é a chave estrangeira
+
+
             modelBuilder.Entity<OrdemServico>().HasData
             (
                 new OrdemServico() { Id = 1, status = (Models.Enuns.StatusEnum)3, Atividade = "Substituido HD", DataCriacao = 10112024, DataAvaliacao = 10112024, DataFinalizacao = 12112024, DataEntrega = 13112024, ValorServico = 350},                new OrdemServico() { Id = 2, status = (Models.Enuns.StatusEnum)5, Atividade = "Revisado e testado", DataCriacao = 10112024, DataAvaliacao = 10112024, DataFinalizacao = 13112024, DataEntrega = 13112024, ValorServico = 950 }
@@ -75,10 +106,12 @@ namespace GestaoApi.Data
                 new Tecnico() { Id = 102, Nome = "Baltazar",Sobrenome = "Santo" ,Cpf = "85265432115", Especialidade = "Pedreiro"}
             );
 
-            /*
+            
+             // Configuração da chave composta para OrdemEquipamento
             modelBuilder.Entity<OrdemEquipamento>()
-               .HasKey(oe => new { oe.OrdemId, oe.NumSerie});
+                .HasKey(oe => new { oe.OrdemId, oe.NumSerie }); // Define OrdemId e NumSerie como chave composta
 
+            // Adicionando dados iniciais para a tabela OrdemEquipamento
             modelBuilder.Entity<OrdemEquipamento>().HasData
             (
                 new OrdemEquipamento() { OrdemId = 1, NumSerie = 5432414 },
@@ -86,7 +119,7 @@ namespace GestaoApi.Data
                 new OrdemEquipamento() { OrdemId = 3, NumSerie = 8975234 },
                 new OrdemEquipamento() { OrdemId = 4, NumSerie = 8456466 }
             );
-            */
+            
 
 
 

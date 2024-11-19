@@ -15,9 +15,13 @@ namespace GestaoApi.Models
         public int DataEntrega { get; set; }
         public string Atividade { get; set; }
         public int ValorServico { get; set; }
-        public Tecnico? TecnicoId { get; set; }
-        public Cliente? ClienteId { get; set; }
-        public Equipamento? EquipamentoId { get; set; }
         public StatusEnum? status { get; set; }
+        public int TecnicoId { get; set; }
+        public Tecnico Tecnico { get; set;}
+        public int ClienteId { get; set; }
+        public Cliente Cliente { get; set; }
+        public int EquipamentoId { get; set; } // Chave estrangeira
+        public Equipamento Equipamento { get; set; } // Propriedade de navegação
+        public ICollection<OrdemEquipamento> OrdemEquipamentos { get; set;}
     }
 }
